@@ -1,0 +1,42 @@
+<h1>show.html</h1>
+<h2>投稿詳細</h2>
+
+<div class="tweet">
+<p><%= @trip.user.email %></p>
+<h3><%= @trip.departure %></h3>
+<h3><%= @trip.destination %></h3>
+<h3><%= @trip.transportation %></h3>
+<h3><%= @trip.thought %></h3>
+<h3><%= @trip.date %></h3>
+<h3><%= @trip.whoslive %></h3>
+<p><%= @trip.created_at %></p>
+
+
+<% if user_signed_in? %>
+    <% if current_user.already_liked?(@trip) %>
+        <%= link_to trip_like_path(@trip), method: :delete do %>
+            <i class="fas fa-heart"></i><%= @trip.likes.count %>
+        <% end %>
+    <% else %>
+        <%= link_to trip_likes_path(@trip), method: :post do %>
+            <i class="far fa-heart"></i><%= @trip.likes.count %>
+        <% end %>
+    <% end %>
+    <% else %>
+    <i class="far fa-heart"></i><%= @trip.likes.count %>
+    <% end %>
+
+
+</div>
+
+<% @trip.tags.each do |tag| %>
+    <span><%= tag.name %></span>
+<% end %>
+
+<h2>いいねしたユーザー</h2>
+<% @trip.liked_users.each do |user| %>
+<li><%= user.email %></li>
+<% end %>
+
+<%= link_to "編集する", edit_trip_path(@trip.id) %>
+<%= link_to "trip一覧に戻る", trips_path %>   

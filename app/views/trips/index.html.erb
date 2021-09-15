@@ -1,0 +1,68 @@
+<h1>index.html</h1>
+
+<%= link_to "ログイン", new_user_session_path %>
+<%= link_to "新規登録", new_user_registration_path %>
+<%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+
+<% if user_signed_in? %>
+	<%= link_to "マイページへ", user_path(current_user.id) %>　
+<% end %>
+
+<h3>目的地から検索</h3>
+<%= form_tag({ controller: "trips", action: "index" }, method: :get) do %>
+	<%= text_field_tag :search %>
+	<%= submit_tag "検索する" %>
+<% end %>
+
+<div class="trips-container">	
+	<% @trips.each do |t| %>
+		<div class="trip">
+			<%= image_tag t.image_url, size: "250x200" if t.image? %>
+			<%= t.departure %>
+			<%= t.destination %>
+			<%= t.transportation %>
+			<%= t.thought %>
+			<%= t.date %>
+			<%= t.whoslive %>
+			<%= t.user.email %>
+			<%= link_to "詳細へ", trip_path(t.id) %>
+			<%= link_to "編集する", edit_trip_path(t.id) %>
+			<% if user_signed_in? %>
+				<% if current_user.already_liked?(t) %>
+					<%= link_to trip_like_path(id: t.id, trip_id: t.id), method: :delete do %>
+						<i class="fas fa-heart"></i><%= t.likes.count %>
+					<% end %>
+				<% else %>
+					<%= link_to trip_likes_path(id: t.id, trip_id: t.id), method: :post do %>
+						<i class="far fa-heart"></i><%= t.likes.count %>
+					<% end %>
+				<% end %>
+			<% else %>
+				<i class="far fa-heart"></i><%= t.likes.count %>
+			<% end %>
+		</div>
+	<% end %>
+	</div>
+<h3>エリアごとの会場詳細をみる</h3>
+<%= link_to "北海道・東北", controller: "venue", action: "hokkaidou" %>
+<%= link_to "関東", controller: "venue", action: "kantou" %>
+<%= link_to "中部", controller: "venue", action: "tyubu" %>
+<%= link_to "近畿・中国", controller: "venue", action: "kinki" %>
+<%= link_to "九州", controller: "venue", action: "kyusyu" %>
+
+
+<h3>エリアごとの投稿を見る</h3>
+<%= form_tag({controller:"trips",action:"index"}, method: :get) do %>
+    <% Tag.all.each do |t| %>
+        <li><%= check_box :tag_ids, t.name %><%= t.name %></li>
+    <% end %>
+    <%= submit_tag '検索' %>
+<% end %>
+
+
+
+
+
+
+
+<%= link_to "新規投稿ページへ", new_trip_path %>

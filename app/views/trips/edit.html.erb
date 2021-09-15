@@ -1,0 +1,9 @@
+<%= form_for @trip do |f| %> 
+  <%= f.label :destination %>
+  <%= f.text_field :destination, :size => 140 %>
+  <%= f.label :transportation %>
+  <%= f.text_field :transportation, :size => 140 %>
+  <%= f.label :thought %>
+  <%= f.text_field :thought, :size => 140 %>
+  <%= f.submit "編集する" %>
+<% end %>
