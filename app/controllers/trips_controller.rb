@@ -3,22 +3,15 @@ class TripsController < ApplicationController
 
 
     def index
-        
         if params[:search] == nil
             @trips= Trip.all
-            elsif params[:search] == ''
-                @trips= Trip.all
-            else
-                #部分検索
-                @trips = Trip.where("destination LIKE ? ",'%' + params[:search] + '%')
-        end
-        if params[:tag_ids]
-            @trips = []
-            params[:tag_ids].each do |key, value|      
-                @trips += Tag.find_by(name: key).trips if value == "1"
-            end
-            @trips.uniq!
-        end
+          elsif params[:search] == ''
+            @trips= Trip.all
+          else
+            #部分検索
+            @trips = Trip.where("departure LIKE ? ",'%' + params[:search] + '%')
+          end
+       
         
     end
     
@@ -52,13 +45,15 @@ class TripsController < ApplicationController
 
     end
 
-    
+   
+
+
 
 
 
     private
     def trip_params
-        params.require(:trip).permit(:departure, :destination, :transportation, :thought, :date, :whoslive, :id, :image, tag_ids: [])
+        params.require(:trip).permit(:departure, :destination, :detail, :transportation, :thought, :date, :whoslive, :id, :image, tag_ids: [])
     end
     
 

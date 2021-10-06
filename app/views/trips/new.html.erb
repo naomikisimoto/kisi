@@ -17,22 +17,29 @@
         </div>
         <div class="field">
             
-            <br><%= f.label :departure %></br>
-            <%= f.text_field :departure, :size => 140 %>
+            <br><%= f.label :出発地 %></br>
+            <%= f.select :departure, [["愛媛", "愛媛"], ["香川", "香川"], ["徳島", "徳島"], ["高知", "高知"]], include_blank: "選択して下さい" %>
+            
 
-            <br><%= f.label :destination %></br>
-            <%= f.text_field :destination, :size => 140 %>
+            <br><%= f.label :目的エリア %></br>
+            <%= f.select :destination, [["北海道・東北", "北海道・東北"], ["関東", "関東"], ["中部", "中部"], ["近畿・中国", "近畿・中国"], ["九州", "九州"]], include_blank: "選択して下さい" %>
+            
+            <br> <%= f.label :会場名 %></br>
+            <%= f.text_field :detail, :size => 140 %>
 
-            <br> <%= f.label :transportation %></br>
-            <%= f.text_field :transportation, :size => 140 %>
+            <br> <%= f.label :交通手段 %></br>
+            <%= f.select :transportation, [["飛行機", "飛行機"], ["電車", "電車"], ["バス", "バス"], ["フェリー", "フェリー"], ["その他", "その他"]], include_blank: "選択して下さい" %>
+            
 
-            <br><%= f.label :thought %></br>
+            <br><%= f.label :感想 %></br>
             <%= f.text_field :thought, :size => 140 %>  
 
-            <br><%= f.label :date %></br>
-            <%= f.text_field :date, :size => 140 %>
+            <br><label class="control-label" for="">出発日</label></br>
+             <%= f.date_select :date, {}, class: 'form-control' %>
 
-            <br><%= f.label :whoslive %></br>
+            
+
+            <br><%= f.label :アーティスト名 %></br>
             <%= f.text_field :whoslive, :size => 140 %>
         </div>
 

@@ -9,10 +9,19 @@
 <% end %>
 
 <h3>目的地から検索</h3>
-<%= form_tag({ controller: "trips", action: "index" }, method: :get) do %>
-	<%= text_field_tag :search %>
-	<%= submit_tag "検索する" %>
-<% end %>
+<%= form_tag({controller:"trips",action:"index"}, method: :get) do %>
+	
+	<select name="search">
+	<option value="">検索クリア</option>
+	<option value="愛媛">愛媛</option>
+	<option value="香川">香川</option>
+	<option value="徳島">徳島</option>
+	<option value="高知">高知</option>
+	</select>
+	<%= submit_tag '検索する'  %>
+  <% end %>
+  
+
 
 <div class="trips-container">	
 	<% @trips.each do |t| %>
@@ -20,6 +29,7 @@
 			<%= image_tag t.image_url, size: "250x200" if t.image? %>
 			<%= t.departure %>
 			<%= t.destination %>
+			<%= t.detail %>
 			<%= t.transportation %>
 			<%= t.thought %>
 			<%= t.date %>
